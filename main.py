@@ -1,5 +1,6 @@
 from flask import Flask, request, redirect, render_template, session, flash
-from flask_sqlalchemy import SQLAlchemy 
+from flask_sqlalchemy import SQLAlchemy
+import datetime 
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -12,7 +13,7 @@ class Blog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120))
     body = db.Column(db.String(300))
-    # owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    date_time = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
     def __init__(self, title, body):
         self.title = title
@@ -20,7 +21,7 @@ class Blog(db.Model):
  
 @app.route('/', methods=['GET'])
 def index():
-    blogs = Blog.query.all()
+    blogs = Blog.query.order_by(Blog.date_time.desc()).all()
     return render_template('blog.html', blogs=blogs)
 
 @app.route('/blog', methods=['GET'])
