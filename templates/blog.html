@@ -1,15 +1,27 @@
 {% extends "base.html" %}
     {% block content %}
         <h1>Blogz</h1>
-        {% if blogs|length == 0 %}
+        {% if blogs.items|length == 0 %}
         <p>No blog entries yet</p>
         {% else %}
-            {% for blog in blogs%}
-                <a href="/blog?id={{blog.id}}"><h2>{{blog.title}}</h2></a>
+            {% for blog in blogs.items %}
+                <a href="/blog/1?id={{blog.id}}"><h2>{{blog.title}}</h2></a>
                 <p>{{blog.body}}</p>
-                <p>Written by: <a href="/blog?owner_id={{blog.owner_id}}">{{blog.owner.username}}</a></p>
+                <p>Written by: <a href="/blog/1?owner_id={{blog.owner_id}}">{{blog.owner.username}}</a></p>
                 <p>{{blog.date_time}}</p>
                 <hr>
             {% endfor %}    
         {% endif %}
+        <!-- {% for page in blogs.iter_pages() %}
+            {% if page %}
+                <a href="{{ url_for('blog', page=page) }}">{{ page }}</a>
+            {% else %}
+                ...
+            {% endif %}
+        {% endfor %}   -->
+        {% if blogs.has_prev %}<a href="{{ url_for('blog', page=blogs.prev_num) }}">&lt;&lt; Newer posts</a>{% else %}&lt;&lt; Newer posts{% endif %} |
+        {% if blogs.has_next %}<a href="{{ url_for('blog', page=blogs.next_num) }}">Older posts &gt;&gt;</a>{% else %}Older posts &gt;&gt;{% endif %}
+
+ 
+
     {% endblock %}

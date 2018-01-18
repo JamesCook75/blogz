@@ -5,9 +5,9 @@
         <p>No blog entries yet</p>
         {% else %}
             {% for blog in blogs%}
-            <a href="/blog?id={{blog.id}}"><h2>{{blog.title}}</h2></a>
+            <a href="/blog/1?id={{blog.id}}"><h2>{{blog.title}}</h2></a>
             <p>{{blog.body}}</p>
-            <p>Written by: <a href="/blog?owner_id={{blog.owner_id}}">{{blog.owner.username}}</a></p>
+            <p>Written by: <a href="/blog/1?owner_id={{blog.owner_id}}">{{blog.owner.username}}</a></p>
             <hr>
             {% endfor %}    
         {% endif %}

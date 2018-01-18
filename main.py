@@ -1,5 +1,6 @@
 from flask import Flask, request, redirect, render_template, session, flash
-from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy, Pagination
+
 import datetime 
 
 app = Flask(__name__)
@@ -98,8 +99,10 @@ def index():
     users = User.query.order_by(User.username).all()
     return render_template('index.html', users=users)
 
-@app.route('/blog', methods=['GET'])
-def blog():
+
+@app.route('/blog/<int:page>', methods=['GET'])
+def blog(page):
+    per_page = 5
     blog_id = request.args.get('id')
     author_id = request.args.get('owner_id')
     if blog_id:
@@ -109,7 +112,7 @@ def blog():
         blogs = Blog.query.filter_by(owner_id=author_id).all()
         return render_template('single_user.html', blogs=blogs)
 
-    blogs = Blog.query.order_by(Blog.date_time.desc()).all()
+    blogs = Blog.query.order_by(Blog.date_time.desc()).paginate(per_page=per_page, page=page, error_out=True)
     return render_template('blog.html', blogs=blogs)
 
 @app.route('/newpost', methods=['GET','POST'])
