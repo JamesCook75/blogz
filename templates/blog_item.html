@@ -2,4 +2,6 @@
     {% block content %}
         <h1>{{blog.title}}</h1>
         <p>{{blog.body}}</p>   
+        <p>Written by: <a href="/blog">{{blog.owner.username}}</a></p>
+        <p>{{blog.date_time}}</p>
     {% endblock %}
