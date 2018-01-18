@@ -12,13 +12,6 @@
                 <hr>
             {% endfor %}    
         {% endif %}
-        <!-- {% for page in blogs.iter_pages() %}
-            {% if page %}
-                <a href="{{ url_for('blog', page=page) }}">{{ page }}</a>
-            {% else %}
-                ...
-            {% endif %}
-        {% endfor %}   -->
         {% if blogs.has_prev %}<a href="{{ url_for('blog', page=blogs.prev_num) }}">&lt;&lt; Newer posts</a>{% else %}&lt;&lt; Newer posts{% endif %} |
         {% if blogs.has_next %}<a href="{{ url_for('blog', page=blogs.next_num) }}">Older posts &gt;&gt;</a>{% else %}Older posts &gt;&gt;{% endif %}
 
