@@ -2,6 +2,8 @@ from flask import Flask, request, redirect, render_template, session, flash
 from flask_sqlalchemy import SQLAlchemy, Pagination
 from models import User, Blog
 from app import db, app
+from hashutils import check_pw_hash
+
 
 @app.before_request        
 def require_login():
@@ -20,7 +22,7 @@ def login():
         password=request.form['password']
         
         user = User.query.filter_by(username=username).first()
-        if user and user.password == password:
+        if user and check_pw_hash(password, user.pw_hash):
             session['username'] = username
             flash("Logged In", 'success')
             return redirect('/newpost')
