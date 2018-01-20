@@ -13,7 +13,7 @@ def require_login():
 
 @app.route("/", methods=['GET'])
 def home():
-    return redirect('/blog/1')
+    return redirect('/index')
 
 @app.route("/login", methods=['POST', 'GET'])
 def login():
